@@ -124,9 +124,5 @@ val items = listOf(
         selectedIcon = R.drawable.settings_icon,
         unselectedIcon = R.drawable.settings_icon,
     ),
-    DrawerNavigationItem(
-        title = App.getInstance().getString(R.string.about),
-        selectedIcon = R.drawable.about_icon,
-        unselectedIcon = R.drawable.about_icon,
-    )
+
 )

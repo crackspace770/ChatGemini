@@ -73,12 +73,12 @@ fun SingleTurnScreen(
                 Box(
                     modifier = Modifier.weight(1f)
                 ){
-                    ConversationArea(viewModel , apiType = ApiType.MULTI_CHAT )
+                    ConversationArea(viewModel , apiType = ApiType.SINGLE_CHAT )
                 }
 
                 TypingArea(
                     viewModel = viewModel,
-                    apiType = ApiType.MULTI_CHAT,
+                    apiType = ApiType.SINGLE_CHAT,
                     bitmaps = null,
                     galleryLauncher = null,
                     permissionLauncher = null

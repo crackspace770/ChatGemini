@@ -44,14 +44,10 @@ import com.fajar.chatgemini.ui.navigation.items
 import com.fajar.chatgemini.utils.ImageHelper
 import kotlinx.coroutines.launch
 
-@ExperimentalMaterial3Api
-@ExperimentalComposeUiApi
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun  ImageChatScreen(
-    viewModel: MainViewModel,
-    navController: NavHostController
-) {
+fun ImageChatScreen(viewModel: MainViewModel, navController: NavHostController) {
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -100,22 +96,21 @@ fun  ImageChatScreen(
             }
         }
     }
-
     ModalNavigationDrawer(
         drawerContent = {
             DrawerNav(
-                selectedItemIndex = selectedItemIndex ,
+                selectedItemIndex = selectedItemIndex,
                 onItemSelect = {selectedItemIndex = it},
-                onCloseDrawer = { scope.launch { drawerState.close() } },
+                onCloseDrawer = {scope.launch { drawerState.close() }},
                 navController = navController
             )
         },
         drawerState = drawerState
     ) {
-        Scaffold (
-            topBar = { MainTopBar(scope, drawerState)}
+        Scaffold(
+            topBar = { MainTopBar(scope, drawerState) }
         ) {
-            Column (
+            Column(
                 modifier = Modifier
                     .padding(top = it.calculateTopPadding())
                     .fillMaxSize()
@@ -126,7 +121,7 @@ fun  ImageChatScreen(
                     modifier = Modifier
                         .weight(1f)
                 ) {
-                    ConversationArea(viewModel, apiType = ApiType.IMAGE_CHAT )
+                    ConversationArea(viewModel, apiType = ApiType.IMAGE_CHAT)
                 }
                 SelectedImageArea(bitmaps = bitmaps)
                 TypingArea(
@@ -135,11 +130,8 @@ fun  ImageChatScreen(
                     bitmaps = bitmaps,
                     galleryLauncher = galleryLauncher,
                     permissionLauncher = permissionLauncher
-                    )
-
+                )
             }
         }
-
     }
-
 }

@@ -4,13 +4,17 @@ import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -44,6 +49,11 @@ fun MessageItem(
     val clipboardManager = LocalClipboardManager.current
     val context = LocalContext.current
     val toast = Toast.makeText(context, stringResource(R.string.text_copied), Toast.LENGTH_LONG)
+
+    val cardBackgroundColor = when (mode) {
+        Mode.GEMINI -> Color.Blue // Define color for GEMINI mode
+        Mode.USER -> Color.DarkGray // Define color for USER mode
+    }
 
     Column(
         modifier = Modifier
@@ -82,37 +92,38 @@ fun MessageItem(
 
             }
 
-            TextButton(
-                onClick = {
-                    clipboardManager.setText(AnnotatedString(text))
-                    toast.show()
-            }
-            ) {
-                Icon(
-                    modifier = Modifier.size(12.dp),
-                    tint = (if (mode == Mode.USER) DecentBlue else DecentGreen),
-                    painter = painterResource(id = R.drawable.baseline_content_copy_24),
-                    contentDescription = "copy"
-                )
-                Text(
-                    color = (if (mode == Mode.USER) DecentBlue else DecentGreen),
-                    fontWeight = FontWeight.W600,
-                    text = "COPY",
-                    fontSize = 10.sp
-                )
+        }
 
-            }
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.TopStart
+        ) {
 
-            SelectionContainer {
-                Text(
-                    modifier = Modifier.padding(start = 35.dp),
-                    fontWeight = FontWeight.W500,
-                    fontSize = 15.sp,
-                    text = text
-                )
+            Card(
+                modifier = Modifier
+                    .width(350.dp),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = cardBackgroundColor,
+                ),
+            ){
+                SelectionContainer(
+
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .padding(15.dp),
+                        fontWeight = FontWeight.W500,
+                        fontSize = 15.sp,
+                        text = text,
+                        color = Color.White
+                    )
+                }
+
             }
 
         }
+
 
     }
 

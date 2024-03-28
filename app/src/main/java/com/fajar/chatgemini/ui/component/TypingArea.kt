@@ -65,11 +65,10 @@ fun TypingArea(
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
     var text by remember { mutableStateOf(TextFieldValue("")) }
-    val isGenerating: Boolean? = when(apiType) {
+    val isGenerating: Boolean? = when (apiType) {
         ApiType.SINGLE_CHAT -> viewModel.singleResponse.observeAsState().value?.lastOrNull()?.isGenerating
         ApiType.IMAGE_CHAT -> viewModel.imageResponse.observeAsState().value?.lastOrNull()?.isGenerating
         ApiType.MULTI_CHAT -> viewModel.conversationList.observeAsState().value?.lastOrNull()?.isGenerating
-
     }
     val context = LocalContext.current
     Row(
@@ -84,7 +83,8 @@ fun TypingArea(
             .background(MaterialTheme.colorScheme.background),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly
-    ){
+    ) {
+
 
         var expanded by remember { mutableStateOf(false) }
 
@@ -94,8 +94,7 @@ fun TypingArea(
                 expanded = false
             },
             modifier = Modifier.background(MaterialTheme.colorScheme.secondaryContainer)
-
-            ) {
+        ) {
             DropdownMenuItem(
                 modifier = Modifier.background(MaterialTheme.colorScheme.secondaryContainer),
                 onClick = {
@@ -112,11 +111,9 @@ fun TypingArea(
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     color = MaterialTheme.colorScheme.primary,
-                    text = "Camera",
-                    fontSize = 15.sp )
-
+                    text = "Camera", fontSize = 15.sp, fontWeight = FontWeight.W600
+                )
             }
-
             DropdownMenuItem(
                 modifier = Modifier.background(MaterialTheme.colorScheme.secondaryContainer),
                 onClick = {
@@ -124,34 +121,36 @@ fun TypingArea(
                     galleryLauncher?.launch("image/*")
                 }
             ) {
-
                 Icon(
                     modifier = Modifier.size(25.dp),
                     painter = painterResource(id = R.drawable.add_gallery_icon),
-                    contentDescription = "gallery",
-                    tint = MaterialTheme.colorScheme.primary
+                    tint = MaterialTheme.colorScheme.primary,
+                    contentDescription = "gallery"
                 )
-                Spacer(modifier = Modifier.size(25.dp))
+                Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     color = MaterialTheme.colorScheme.primary,
                     text = "Gallery", fontSize = 15.sp, fontWeight = FontWeight.W600
                 )
-
             }
-
         }
 
-        when(apiType) {
+
+        when (apiType) {
             ApiType.MULTI_CHAT -> androidx.compose.material3.IconButton(onClick = { viewModel.clearContext() }
-            ){
+            ) {
                 Icon(
                     modifier = Modifier.size(30.dp),
-                    painter = androidx.compose.ui.res.painterResource(id = R.drawable.refresh),
-                    tint = androidx.compose.material3.MaterialTheme.colorScheme.primary,
+                    painter = painterResource(id = R.drawable.refresh),
+                    tint = MaterialTheme.colorScheme.primary,
                     contentDescription = "refresh"
                 )
             }
-            ApiType.IMAGE_CHAT -> IconButton(onClick = { }) {
+
+            ApiType.IMAGE_CHAT -> androidx.compose.material3.IconButton(onClick = {
+                expanded = true
+            }
+            ) {
                 Icon(
                     modifier = Modifier.size(30.dp),
                     painter = painterResource(id = R.drawable.add_icon),
@@ -159,6 +158,7 @@ fun TypingArea(
                     contentDescription = "add"
                 )
             }
+
             ApiType.SINGLE_CHAT -> Unit
         }
 
@@ -167,9 +167,9 @@ fun TypingArea(
             onValueChange = { newText -> text = newText },
             placeholder = {
                 Text(
-                    text = "Ask a question",
                     color = MaterialTheme.colorScheme.inversePrimary,
-                    )
+                    text = "Ask a question"
+                )
             },
             modifier = Modifier
                 .weight(1f)
@@ -177,7 +177,7 @@ fun TypingArea(
                 .background(MaterialTheme.colorScheme.background),
             shape = RoundedCornerShape(28),
             keyboardActions = KeyboardActions(
-                onDone = {keyboardController?.hide()}
+                onDone = { keyboardController?.hide() }
             ),
             colors = TextFieldDefaults.colors(
                 focusedIndicatorColor = MaterialTheme.colorScheme.primary,
@@ -191,18 +191,18 @@ fun TypingArea(
                 Box(
                     modifier = Modifier.padding(end = 10.dp),
                     contentAlignment = Alignment.Center
-                ){
-                    if (isGenerating !=true) {
+                ) {
+                    if (isGenerating != true) {
                         Icon(
                             painter = painterResource(id = R.drawable.send_icon),
                             contentDescription = "send",
                             modifier = Modifier
                                 .size(30.dp)
                                 .clickable {
-                                    if(text.text
+                                    if (text.text
                                             .trim()
-                                            .isNotEmpty() &&(apiType != ApiType.IMAGE_CHAT || bitmaps!!.isNotEmpty())
-                                    ){
+                                            .isNotEmpty() && (apiType != ApiType.IMAGE_CHAT || bitmaps!!.isNotEmpty())
+                                    ) {
                                         keyboardController?.hide()
                                         focusManager.clearFocus()
                                         when (apiType) {
@@ -227,7 +227,7 @@ fun TypingArea(
                                 },
                             tint = MaterialTheme.colorScheme.primary
                         )
-                    } else{
+                    } else {
                         val strokeWidth = 2.dp
                         CircularProgressIndicator(
                             modifier = Modifier
@@ -250,8 +250,5 @@ fun TypingArea(
                 fontSize = 18.sp
             )
         )
-
     }
-
 }
-

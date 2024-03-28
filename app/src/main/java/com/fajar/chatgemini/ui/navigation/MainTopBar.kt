@@ -47,7 +47,6 @@ fun MainTopBar(scope: CoroutineScope, drawerState: DrawerState) {
                     )
             }
         },
-        actions = {},
         navigationIcon = {
             IconButton(onClick = { scope.launch { drawerState.open() } }) {
                 Icon(
