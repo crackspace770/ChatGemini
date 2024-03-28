@@ -298,7 +298,7 @@ fun ApiSetupHelper() {
     ) {
         Icon(
             modifier = Modifier.size(50.dp),
-            painter = painterResource(id = R.drawable.about_icon),
+            painter = painterResource(id = R.drawable.ic_info),
             tint = MaterialTheme.colorScheme.primary,
             contentDescription = "help"
         )

@@ -141,7 +141,7 @@ fun TypingArea(
             ) {
                 Icon(
                     modifier = Modifier.size(30.dp),
-                    painter = painterResource(id = R.drawable.refresh),
+                    painter = painterResource(id = R.drawable.ic_refresh),
                     tint = MaterialTheme.colorScheme.primary,
                     contentDescription = "refresh"
                 )
