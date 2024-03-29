@@ -45,11 +45,7 @@ fun ConversationArea(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if ( (response !=null) && response.isEmpty() ) {
-            Image(
-                modifier = Modifier.size(100.dp),
-                painter = painterResource(id = R.drawable.no_message_icon),
-                contentDescription = "no message"
-            )
+
             Text(
                 color = MaterialTheme.colorScheme.primary,
                 text = "No message yet",
